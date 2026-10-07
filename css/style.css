@@ -1,0 +1,18 @@
+/* style.css – utseende og animasjoner */
+
+:root {
+  /* Farger og fonter kommer her */
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+
+/* ---------- Start og video ---------- */
+
+/* ---------- Mood check ---------- */
+
+/* ---------- Knuse-animasjon ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

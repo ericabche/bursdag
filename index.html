@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gratulerer med dagen!</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- 1. Start: play-knapp og video -->
+  <section id="skjerm-start" class="skjerm">
+    <button type="button" id="play-knapp" aria-label="Spill av">▶</button>
+    <video id="video" src="video/bursdag.mp4" playsinline hidden></video>
+  </section>
+
+  <!-- 2. Mood check -->
+  <section id="skjerm-mood" class="skjerm" hidden>
+    <h1>Hvordan har du det i dag?</h1>
+    <div id="mood-knapper">
+      <button type="button" class="mood daarlig" aria-label="Veldig dårlig">😡</button>
+      <button type="button" class="mood daarlig" aria-label="Dårlig">😕</button>
+      <button type="button" class="mood daarlig" aria-label="Middels">😐</button>
+      <button type="button" class="mood daarlig" aria-label="Bra">🙂</button>
+      <button type="button" class="mood best" id="best-knapp" aria-label="Fantastisk">😄</button>
+    </div>
+  </section>
+
+  <!-- 3. Neste del (fylles inn senere) -->
+  <section id="skjerm-neste" class="skjerm" hidden>
+    <h1>Gratulerer med dagen! 🎉</h1>
+  </section>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
