@@ -4,30 +4,261 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gratulerer med dagen!</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Lato:wght@400;700&family=Pacifico&display=swap">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <!-- 1. Start: play-knapp og video -->
   <section id="skjerm-start" class="skjerm">
-    <button type="button" id="play-knapp" aria-label="Spill av">▶</button>
-    <video id="video" src="video/bursdag.mp4" playsinline hidden></video>
+    <!-- Pynt i bakgrunnen -->
+    <div class="pynt" aria-hidden="true">
+      <span class="ballong" style="--x: 8%;  --farge: #ff6b9d; --tid: 9s;  --forsinkelse: 0s"></span>
+      <span class="ballong" style="--x: 22%; --farge: #ffd93d; --tid: 11s; --forsinkelse: 2s"></span>
+      <span class="ballong" style="--x: 78%; --farge: #6bcbff; --tid: 10s; --forsinkelse: 1s"></span>
+      <span class="ballong" style="--x: 90%; --farge: #a66bff; --tid: 12s; --forsinkelse: 3s"></span>
+      <span class="ballong" style="--x: 60%; --farge: #6bffb8; --tid: 13s; --forsinkelse: 5s"></span>
+    </div>
+
+    <p class="start-liten">Psst …</p>
+    <h1 class="start-tittel">Du har fått en hilsen!</h1>
+
+    <button type="button" id="play-knapp" aria-label="Spill av">
+      <span class="play-ikon">▶</span>
+    </button>
+    <p class="start-hint">Skru på lyden 🔊 og trykk play</p>
+
+    <video id="video" src="video/bursdag.mp4" playsinline preload="auto" hidden></video>
+    <button type="button" id="hopp-over" hidden>Hopp over ⏭</button>
   </section>
 
   <!-- 2. Mood check -->
   <section id="skjerm-mood" class="skjerm" hidden>
-    <h1>Hvordan har du det i dag?</h1>
-    <div id="mood-knapper">
-      <button type="button" class="mood daarlig" aria-label="Veldig dårlig">😡</button>
-      <button type="button" class="mood daarlig" aria-label="Dårlig">😕</button>
-      <button type="button" class="mood daarlig" aria-label="Middels">😐</button>
-      <button type="button" class="mood daarlig" aria-label="Bra">🙂</button>
-      <button type="button" class="mood best" id="best-knapp" aria-label="Fantastisk">😄</button>
+    <div class="mood-kort">
+      <h2 class="mood-tittel">Mood check:<br>Hvordan har du det?</h2>
+
+      <div class="mood-knapper">
+        <!-- 1: Elendig -->
+        <div class="plass">
+          <button type="button" class="mood daarlig" data-bilde="bilder/1.png" aria-label="Elendig">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M7.5 9.3 10 10.3M16.5 9.3 14 10.3"/>
+              <path d="M8.5 16.5q3.5-3 7 0"/>
+            </svg>
+          </button>
+        </div>
+        <!-- 2: Dårlig -->
+        <div class="plass">
+          <button type="button" class="mood daarlig" data-bilde="bilder/2.png" aria-label="Dårlig">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <circle class="fylt" cx="9" cy="10" r="1"/><circle class="fylt" cx="15" cy="10" r="1"/>
+              <path d="M8.5 16q3.5-3 7 0"/>
+            </svg>
+          </button>
+        </div>
+        <!-- 3: Middels -->
+        <div class="plass">
+          <button type="button" class="mood daarlig" data-bilde="bilder/3.png" aria-label="Middels">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <circle class="fylt" cx="9" cy="10" r="1"/><circle class="fylt" cx="15" cy="10" r="1"/>
+              <path d="M9 15h6"/>
+            </svg>
+          </button>
+        </div>
+        <!-- 4: Bra -->
+        <div class="plass">
+          <button type="button" class="mood daarlig" data-bilde="bilder/4.png" aria-label="Bra">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <circle class="fylt" cx="9" cy="10" r="1"/><circle class="fylt" cx="15" cy="10" r="1"/>
+              <path d="M8.5 14q3.5 3.5 7 0"/>
+            </svg>
+          </button>
+        </div>
+        <!-- 5: Fantastisk – den eneste som kan velges -->
+        <div class="plass">
+          <button type="button" class="mood best" id="best-knapp" aria-label="Fantastisk" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M7.5 10q1.5-1.6 3 0M13.5 10q1.5-1.6 3 0"/>
+              <path d="M8 13.5h8a4 4 0 0 1-8 0z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="button" id="send-knapp" class="send-knapp" disabled>Submit</button>
     </div>
   </section>
 
-  <!-- 3. Neste del (fylles inn senere) -->
-  <section id="skjerm-neste" class="skjerm" hidden>
-    <h1>Gratulerer med dagen! 🎉</h1>
+  <!-- 3. Meny med tre Snoopy-knapper -->
+  <section id="skjerm-meny" class="skjerm stjerner" hidden>
+    <h1 class="meny-tittel">Gratulerer med dagen!</h1>
+    <p class="meny-undertittel">Velg en overraskelse</p>
+
+    <div class="meny-valg">
+      <button type="button" class="meny-knapp" data-til="skjerm-brev" style="--farge: #e0636b">
+        <img src="bilder/snoopy_kort.png" alt="">
+      </button>
+      <button type="button" class="meny-knapp" data-til="skjerm-kake" style="--farge: #8ec3ea">
+        <img src="bilder/snoopy_kake.jpeg" alt="">
+      </button>
+      <button type="button" class="meny-knapp" data-til="skjerm-bilder" style="--farge: #6db38f">
+        <img src="bilder/snoopy_bilder.jpeg" alt="">
+      </button>
+      <button type="button" class="meny-knapp" data-til="skjerm-musikk" style="--farge: #e3a6cf">
+        <img src="bilder/snoopy_musikk.png" alt="">
+      </button>
+    </div>
+
+    <button type="button" class="knapp avslutt-knapp" id="avslutt-knapp" data-til="skjerm-slutt">Avslutt</button>
+  </section>
+
+  <!-- 3a. Brev med bursdagskort -->
+  <section id="skjerm-brev" class="skjerm stjerner" hidden>
+    <button type="button" class="tilbake" data-til="skjerm-meny">← Tilbake</button>
+    <h2 class="under-tittel">Du har fått post!</h2>
+    <p class="hint">Trykk på konvolutten</p>
+
+    <button type="button" id="konvolutt" class="konvolutt" aria-label="Åpne brevet">
+      <span class="konv-bak"></span>
+      <span class="konv-brev">Til deg ♥</span>
+      <span class="konv-lomme"></span>
+      <span class="konv-klaff"></span>
+      <span class="konv-segl">♥</span>
+    </button>
+
+    <!-- Selve bursdagskortet – skriv hilsenen din her -->
+    <article id="bursdagskort" class="bursdagskort" hidden>
+      <h2>Kjære Julie!</h2>
+      <p>Gratulerer så mye med 25 års dagen!</p>
+      <p>Håper dagen står til all forventning</p>
+      <p>og at du koser deg kjempe masse.</p>
+      <p>Velkommen til unc-klubben</p>
+      <p class="hilsen">Love You Always, Erica♥</p>
+      <button type="button" id="lukk-kort" class="knapp">Lukk</button>
+    </article>
+  </section>
+
+  <!-- 3b. Kake -->
+  <section id="skjerm-kake" class="skjerm stjerner" hidden>
+    <button type="button" class="tilbake" data-til="skjerm-meny">← Tilbake</button>
+    <h2 id="kake-tittel" class="under-tittel">Ønsk deg noe …</h2>
+
+    <svg id="kake" class="kake" viewBox="0 0 300 290" aria-hidden="true">
+      <defs>
+        <pattern id="lys-striper" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+          <rect width="8" height="8" fill="#f6b3d3"/>
+          <rect width="4" height="8" fill="#8ec3ea"/>
+        </pattern>
+        <radialGradient id="flamme-farge" cx="50%" cy="70%" r="60%">
+          <stop offset="0" stop-color="#fffbe0"/>
+          <stop offset="0.45" stop-color="#ffd84d"/>
+          <stop offset="1" stop-color="#ff8a3d"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Fat -->
+      <ellipse cx="150" cy="258" rx="135" ry="18" fill="#fff" stroke="#2b2b2b" stroke-width="3"/>
+
+      <!-- Nederste etasje -->
+      <path d="M45 180 V245 A105 14 0 0 0 255 245 V180" fill="#fde68a" stroke="#2b2b2b" stroke-width="3"/>
+      <path d="M45 212 V222 A105 14 0 0 0 255 222 V212 A105 14 0 0 1 45 212Z" fill="#f6b3d3"/>
+      <ellipse cx="150" cy="180" rx="105" ry="14" fill="#f6b3d3" stroke="#2b2b2b" stroke-width="3"/>
+      <g fill="#f6b3d3" stroke="#2b2b2b" stroke-width="3" stroke-linejoin="round">
+        <path d="M62 188 v9 a6 6 0 0 0 12 0 v-5"/>
+        <path d="M105 193 v13 a6 6 0 0 0 12 0 v-12"/>
+        <path d="M160 194 v8 a6 6 0 0 0 12 0 v-9"/>
+        <path d="M212 190 v12 a6 6 0 0 0 12 0 v-15"/>
+      </g>
+
+      <!-- Øverste etasje -->
+      <path d="M80 125 V180 A70 10 0 0 0 220 180 V125" fill="#fde68a" stroke="#2b2b2b" stroke-width="3"/>
+      <path d="M80 150 V158 A70 10 0 0 0 220 158 V150 A70 10 0 0 1 80 150Z" fill="#8ec3ea"/>
+      <ellipse cx="150" cy="125" rx="70" ry="10" fill="#f6b3d3" stroke="#2b2b2b" stroke-width="3"/>
+      <g fill="#f6b3d3" stroke="#2b2b2b" stroke-width="3" stroke-linejoin="round">
+        <path d="M95 131 v8 a5 5 0 0 0 10 0 v-6"/>
+        <path d="M140 134 v11 a5 5 0 0 0 10 0 v-11"/>
+        <path d="M190 132 v7 a5 5 0 0 0 10 0 v-8"/>
+      </g>
+
+      <!-- Lysene lages i kake.js -->
+      <g id="lys"></g>
+    </svg>
+
+    <button type="button" id="blaas-knapp" class="knapp knapp-stor">Blås ut lysene</button>
+    <button type="button" id="tenn-knapp" class="knapp" hidden>Tenn lysene igjen</button>
+  </section>
+
+  <!-- 3c. Bilder -->
+  <section id="skjerm-bilder" class="skjerm stjerner" hidden>
+    <button type="button" class="tilbake" data-til="skjerm-meny">← Tilbake</button>
+    <h2 class="under-tittel">Minner</h2>
+    <p class="hint">Trykk på et bilde for å se det større</p>
+
+    <!-- Bildene legges inn fra listen i js/galleri.js -->
+    <div id="galleri" class="galleri"></div>
+
+    <dialog id="stort-bilde" class="stort-bilde">
+      <img alt="">
+      <p></p>
+      <button type="button" class="knapp" id="lukk-bilde">Lukk</button>
+    </dialog>
+  </section>
+
+  <!-- 3d. Musikk -->
+  <section id="skjerm-musikk" class="skjerm stjerner" hidden>
+    <button type="button" class="tilbake" data-til="skjerm-meny">← Tilbake</button>
+    <h2 class="under-tittel">Musikk</h2>
+    <p class="hint" id="sang-tittel">Bursdagssangen</p>
+
+    <div id="platespiller" class="platespiller">
+      <div class="tallerken">
+        <div class="plate">
+          <div class="etikett">♥</div>
+        </div>
+        <img class="danser" src="video/snoopy_dancing.gif" alt="Snoopy og Woodstock danser">
+      </div>
+
+      <div class="arm">
+        <span class="arm-fot"></span>
+        <span class="arm-stang"></span>
+        <span class="arm-hode"></span>
+      </div>
+
+      <span class="knott knott-1"></span>
+      <span class="knott knott-2"></span>
+      <span class="lampe"></span>
+
+      <!-- Noter som svever opp (lages i musikk.js) -->
+      <div class="noter" aria-hidden="true"></div>
+    </div>
+
+    <button type="button" id="spill-knapp" class="knapp knapp-stor">▶ Spill av</button>
+
+    <!-- Bytt ut med din egen sang -->
+    <audio id="sang" src="lyd/In_Da_Club.mp3" preload="auto" loop></audio>
+  </section>
+
+  <!-- 4. Avslutning med video -->
+  <section id="skjerm-slutt" class="skjerm stjerner" hidden>
+    <button type="button" class="tilbake" data-til="skjerm-meny">← Tilbake</button>
+    <h2 class="under-tittel">Til slutt …</h2>
+
+    <div class="video-ramme">
+      <span class="tape tape-1" aria-hidden="true"></span>
+      <span class="tape tape-2" aria-hidden="true"></span>
+      <video id="slutt-video" src="video/slutt.mp4" playsinline controls preload="metadata"></video>
+      <p id="slutt-feil" class="slutt-feil" hidden>Fant ikke videoen – ligger den i video/slutt.mp4?</p>
+    </div>
+
+    <p id="slutt-hilsen" class="slutt-hilsen">Gratulerer med dagen! ♥</p>
+    <button type="button" id="se-igjen" class="knapp" hidden>↻ Se på nytt</button>
   </section>
 
   <script type="module" src="js/main.js"></script>
